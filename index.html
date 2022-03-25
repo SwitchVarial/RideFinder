@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <title>RideFinder - Etusivu</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Slab:wght@100;300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src='scripts/main.js'></script>
+    <script src='scripts/firebase.js' type="module"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+            <div class="container-fluid">
+                    <a class="navbar-brand" href="index.html"><img class="d-block mx-auto text-white" src="images/ridefinder-horizontal.svg" alt="RideFinder logo" height="30"></a>
+                    <!-- Navigation and Hamburger -->
+<!--                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" onClick="window.location.reload();" href="#hero">Etusivu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onClick="window.location.reload();" href="#services">Palvelut</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onClick="window.location.reload();" href="#info">Info</a>
+                        </li>
+                    </ul> -->
+                    <form class="d-flex" id="search" onsubmit="return false" action="#">
+                        <input class="form-control me-2" type="search" id="search-input" placeholder="Etsi hiihtokeskuksia" aria-label="Search">
+                        <button class="btn btn-light btn-sm px-3" onclick="searchResorts()" type="submit">Etsi</button>
+                    </form>
+                    </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div id="content">
+            <section id="hero">
+                <!-- Carousel -->
+                <div id="demo" class="carousel slide mt-0" data-bs-ride="carousel">
+                
+                  <!-- The slideshow/carousel -->
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="images/board_bg.jpg" alt="&copy; Hansenit - Lumilautailua" class="d-block w-100">
+                        <div class="carousel-caption">
+                            <img class="d-block mx-auto mb-4 text-white d-none d-sm-none d-md-none d-lg-block" src="images/ridefinder-vertical.svg" alt="RideFinder logo" height="140">
+                            <h2 class="display-5 fw-bold">Löydä lähin hiihtokeskus</h2>
+                            <p class="lead d-none d-sm-block">Sinua lähimmät hiihtokeskukset napin painalluksella</p>
+                            <button type="button" class="btn btn-primary btn-lg" onclick="getLocation()">Lähimmät keskukset</button>
+                        </div>  
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/ski_bg.jpg" alt="&copy; Hansenit - Laskettelua" class="d-block w-100">
+                        <div class="carousel-caption">
+                            <img class="d-block mx-auto mb-4 text-white d-none d-sm-none d-md-none d-lg-block" src="images/ridefinder-vertical.svg" alt="RideFinder logo" height="140">
+                            <h2 class="display-5 fw-bold">Kaikki hiihtokeskukset</h2>
+                            <p class="lead d-none d-sm-block">Kaikki yhteystiedot ja ajankohtainen sää</p>
+                            <button type="button" class="btn btn-primary btn-lg" onclick="getAllResorts()">Kaikki keskukset</button>
+                        </div>
+                    </div>
+                  </div>
+                
+                  <!-- Left and right controls/icons -->
+                  <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                  </button>
+                </div>
+            </section>
+            <section id="services">
+                <div class="container">
+                    <div class="text-center">
+                        <h2 class="text-center fw-bold">Hiihtokeskusten tiedot</h2>
+                        <p class='text-center lead mb-4'>Meiltä saat kaikki tarvittavat tiedot seuraavan laskureissusi suunnitteluun. Älä etsi kauempaa!</p>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                                <i class="bi bi-geo-alt-fill text-primary" style="font-size:64px;"></i>
+                            <h4 class="my-3">Yhteystiedot</h4>
+                            <p class="text-muted">Linkit nettisivuille, sähköposti ja vaikkapa reittiohjeet. Nämä kaikki tiedot löydät RideFinderista.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <i class="bi bi-cloud-snow-fill text-primary" style="font-size:64px;"></i>
+                            <h4 class="my-3">Säätiedot</h4>
+                            <p class="text-muted">Ajankohtaiset säätiedot meille toimittaa OpenWeather. Nyt tiedät miten putkeutua, niin ei tule kuuma eikä kylmä.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <i class="bi bi-tools text-primary" style="font-size:64px;"></i>
+                            <h4 class="my-3">Hiihtokeskuksen palvelut</h4>
+                            <p class="text-muted">RideFinder kertoo sinulle myös mitä palveluita hiihtokeskuksista on saatavilla. Löytyykö vuokraamo? Entä ravintola?</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="info" class="bg-light">
+                <div class="container">
+                    <div class="text-center">
+                        <h2 class="text-center fw-bold">Mistä RideFinder saa tietonsa?</h2>
+                        <p class='text-center lead mb-4'>Haluamme olla avoimia palvelun suhteen ja kerromme avoimesti, mistä saamme tietomme.</p>
+                    </div>
+                    <div class="accordion" id="site-info">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              Mistä sijaintitiedot tulevat?
+                            </button>
+                          </h2>
+                          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                              <p><strong>Sijaintitiedot tulevat IP-soitteesi perusteella.</strong> RideFinder käyttää Free IP Geolotion API -palvelua. Freegeoip.app on ilmainen IP-paikannussovellus, joka on kaikkien saatavilla. Se käyttää tietokantaa IP-osoitteista, jotka taas puolestaan liitetään kaupunkeihin. Samalla palvelusta saadaan myös muita asiaankuuluvia tietoja, kuten aikavyöhyke, leveys- ja pituusaste. Sijantitietoja ei yhdistetä käyttäjiin vaan ne haetaan vain palvelun tarjoamiseksi. Lue lisää osoittesta: <a href="https://freegeoip.app" target="_blank">https://freegeoip.app</a></p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              Mistä hiihtokeskusten tiedot ovat?
+                            </button>
+                          </h2>
+                          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                              <p><strong>Hiihtokeskusten tiedot tulevat Lipas-tietokannasta.</strong> LIPAS tarjoaa ajantasaisen tiedon Suomen julkisista liikuntapaikoista ja virkistyskohteista avoimessa tietokannassa. Hiihtokeskusten edustejat voivat halutessaan päivittää omia tietojaan. Lipas-palvelulla on avoin rajapinta, josta tiedot haetaan. Lue lisää osoitteesta: <a href="https://lipas.fi/" target="_blank">https://lipas.fi/</a></p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                              Mistä säätiedot ovat peräisin?
+                            </button>
+                          </h2>
+                          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                              <p><strong>Säätiedot ovat peräisin OpenWeather -palvelusta</strong> OpenWeather on yritys, joka tarjoaa tuotteita yrityksille ilmastodatan avulla. OpenWeather tarjoaa jokaiselle maapallon pisteelle hyperlokaalisen hetkellisen ennusteen, historialliset tiedot, nykyisen tilan ja lyhyen aikavälin säätiedot vuosittaiseen ennusteeseen. Kaikki tiedot ovat saatavilla alan standardisovellusliittymien kautta. Lue lisää osoittesta: <a href="https://openweathermap.org" target="_blank">https://openweathermap.org</a></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </section>
+            <section id="review" class="bg-white">
+                <div class="container">
+                    <div class="text-center">
+                        <h2 class="text-center fw-bold">Arvostele RideFinder</h2>
+                        <p class="text-center lead mb-4">Näin meidän käyttäjämme ovat meidät arvostelleet:</p>
+                        <p id="review-text"></p>
+                    </div>
+                </div>
+            </section>
+            <section id="review-form" class="bg-white">
+                <div class="container">
+                    <div class="text-center">
+                        <h2 class="text-center fw-bold mb-3">Arvostelusi</h2>
+                        <p class="text-center lead mb-4">Voit arvostella meidät yhdestä viiteen. Toivottavasti tykkäät!</p>
+                    </div>
+                    <form id="rate-us" onsubmit="return false" action="#" class="needs-validation form-inline justify-content-center" novalidate>
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-4 mb-3 text-center">
+                                <label for="rating" class="form-label">Valitse tähtiluokitus</label>
+                                <select class="form-select mb-3" id="rating" aria-label="Arvostelu" required>
+                                    <option value="1">Yksi tähti</option>
+                                    <option value="2">Kaksi tähteä</option>
+                                    <option value="3">Kolme tähteä</option>
+                                    <option value="4">Neljä tähteä</option>
+                                    <option value="5" selected>Viisi tähteä</option>
+                                </select>
+                                <div class="valid-feedback">
+                                    Hyvältä näyttää!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Valitse tähtiluokitus.
+                                </div>
+                                <input class="btn btn-primary px-3" id="submit" type="submit" value="Lähetä">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer>
+            <footer class="mt-auto mb-0 my-0 bg-primary">
+              <ul class="nav navbar-dark justify-content-center py-3 my-0">
+                <li class="nav-item"><a href="index.html#hero" onClick="window.location.reload();" class="nav-link px-2 text-white">Etusivu</a></li>
+                <li class="nav-item"><a href="index.html#services" onClick="window.location.reload();" class="nav-link px-2 text-white">Palvelut</a></li>
+                <li class="nav-item"><a href="index.html#info" onClick="window.location.reload();" class="nav-link px-2 text-white">Info</a></li>
+                <li class="nav-item"><a href="index.html#review" onClick="window.location.reload();" class="nav-link px-2 text-white">Arvostelut</a></li>
+              </ul>
+              <p class="text-center text-white pb-3 mb-0">&copy; 2022 RideFinder, Finland</p>
+            </footer>
+    </footer>
+</body>
+</html>
