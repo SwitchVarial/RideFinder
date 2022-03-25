@@ -39,7 +39,6 @@
                         <input class="form-control me-2" type="search" id="search-input" placeholder="Etsi hiihtokeskuksia" aria-label="Search">
                         <button class="btn btn-light btn-sm px-3" onclick="searchResorts()" type="submit">Etsi</button>
                     </form>
-                    </div>
             </div>
         </nav>
     </header>
@@ -170,19 +169,13 @@
                         <div class="row justify-content-md-center">
                             <div class="col-md-4 mb-3 text-center">
                                 <label for="rating" class="form-label">Valitse tähtiluokitus</label>
-                                <select class="form-select mb-3" id="rating" aria-label="Arvostelu" required>
+                                <select class="form-select mb-3" id="rating" aria-label="Arvostelu">
                                     <option value="1">Yksi tähti</option>
                                     <option value="2">Kaksi tähteä</option>
                                     <option value="3">Kolme tähteä</option>
                                     <option value="4">Neljä tähteä</option>
                                     <option value="5" selected>Viisi tähteä</option>
                                 </select>
-                                <div class="valid-feedback">
-                                    Hyvältä näyttää!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Valitse tähtiluokitus.
-                                </div>
                                 <input class="btn btn-primary px-3" id="submit" type="submit" value="Lähetä">
                             </div>
                         </div>
@@ -191,8 +184,8 @@
             </section>
         </div>
     </main>
-    <footer>
-            <footer class="mt-auto mb-0 my-0 bg-primary">
+    <footer class="mt-auto mb-0 my-0 bg-primary">
+            
               <ul class="nav navbar-dark justify-content-center py-3 my-0">
                 <li class="nav-item"><a href="index.html#hero" onClick="window.location.reload();" class="nav-link px-2 text-white">Etusivu</a></li>
                 <li class="nav-item"><a href="index.html#services" onClick="window.location.reload();" class="nav-link px-2 text-white">Palvelut</a></li>
@@ -200,7 +193,7 @@
                 <li class="nav-item"><a href="index.html#review" onClick="window.location.reload();" class="nav-link px-2 text-white">Arvostelut</a></li>
               </ul>
               <p class="text-center text-white pb-3 mb-0">&copy; 2022 RideFinder, Finland</p>
-            </footer>
+
     </footer>
 </body>
 </html>

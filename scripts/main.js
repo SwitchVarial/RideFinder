@@ -1,5 +1,5 @@
 function getLocation() {
-    fetch('https://freegeoip.app/json/') // Muunnetaan vastaus JSON muotoon
+    fetch('https://freegeoip.app/json/', { mode: 'cors' }) // Muunnetaan vastaus JSON muotoon
         .then(function (response) {
             return response.json();
         })
